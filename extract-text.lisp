@@ -24,19 +24,18 @@
 ;; Add the PDFBox library to the CLASSPATH
 (add-to-classpath "/opt/java/pdfbox-app-2.0.21.jar")
 
-;; Import the File, PDDocument and PDFTextStripper classes
-(defconstant +file+ (jclass "java.io.File"))
-(defconstant +pd-document+ (jclass "org.apache.pdfbox.pdmodel.PDDocument"))
-(defconstant +pdf-text-stripper+ (jclass "org.apache.pdfbox.text.PDFTextStripper"))
-
 ;;; Wrap both static methods and instance methods into Lisp functions
 (defun load-document (filepath)
-  (let ((file (jnew +file+ filepath)))
-    (jstatic (jmethod +pd-document+ "load" +file+) +pd-document+ file)))
+  (let* ((File (jclass "java.io.File"))
+         (PDDocument (jclass "org.apache.pdfbox.pdmodel.PDDocument"))
+         (new-file (jnew File filepath)))
+    (jstatic (jmethod PDDocument "load" File) PDDocument new-file)))
 
 (defun get-text (document)
-  (let ((text (jnew +pdf-text-stripper+)))
-    (jcall (jmethod +pdf-text-stripper+ "getText" +pd-document+) text document)))
+  (let* ((PDDocument (jclass "org.apache.pdfbox.pdmodel.PDDocument"))
+         (PDFTextStripper (jclass "org.apache.pdfbox.text.PDFTextStripper"))
+         (text (jnew PDFTextStripper)))
+    (jcall (jmethod PDFTextStripper "getText" PDDocument) text document)))
 
 ;; Define the function to extract the content of a PDF file
 (defun extract-text-from-pdf (filepath)
