@@ -16,7 +16,7 @@
 (defun extract-text-from-pdf (filepath)
   "Given the path of a PDF file, extract its content as text."
   (let* ((file (jnew +file+ filepath))
-         (document (jcall +load+ +pd-document+ file))
+         (document (jstatic +load+ +pd-document+ file))
          (text (jcall +get-text+ (jnew +pdf-text-stripper+) document)))
     text))
 
