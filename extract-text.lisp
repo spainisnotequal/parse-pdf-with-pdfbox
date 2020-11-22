@@ -22,7 +22,7 @@
 ;;;     }
 
 ;; Add the PDFBox library to the CLASSPATH
-(add-to-classpath "./lib/pdfbox-app-2.0.21.jar")
+(add-to-classpath "/opt/java/pdfbox-app-2.0.21.jar")
 
 ;; Import the File, PDDocument and PDFTextStripper classes
 (defconstant +file+ (jclass "java.io.File"))
